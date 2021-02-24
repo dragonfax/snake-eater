@@ -16,6 +16,7 @@ const client = new Discord.Client();
 client.login(token);
 
 var connection;
+var dispatcher;
 
 client.once('ready', async () => {
   console.log('Ready!');
@@ -67,6 +68,11 @@ client.on('voiceStateUpdate', (oldMemberState, newMemberState) => {
 
   if ( listenersCount > 0 && ! playingSong ) {
     playSong();
+  } else if ( listenersCount == 0 && playingSong && dispatcher ) {
+    console.log("no users listening, stopping playback")
+    dispatcher.pause();
+    dispatcher.destroy();
+    playingSong = false;
   }
 
 })
@@ -77,7 +83,7 @@ async function playSong() {
 
   console.log("playing song");
 
-  const dispatcher = connection
+  dispatcher = connection
     .play(filename)
     .on("finish", () => {
       if ( listenersCount > 0 ) {
