@@ -8,7 +8,11 @@ const {
 } = require('./config.json');
 const ytdl = require('ytdl-core');
 const { config } = require('process');
+const moment = require('moment');
 
+const songLengthSeconds = 60 + 49; // 1:49
+
+var now = moment();
 var listenersCount = 0;
 var playingSong = false;
 
@@ -83,8 +87,14 @@ async function playSong() {
 
   console.log("playing song");
 
+
+  // when to start the playback at?
+  var seconds = moment().diff(now, 'seconds');
+  var skip = seconds % songLengthSeconds;
+  console.log(`skiping to ${skip}`);
+
   dispatcher = connection
-    .play(filename)
+    .play(filename, { seek: skip })
     .on("finish", () => {
       if ( listenersCount > 0 ) {
         playSong();
