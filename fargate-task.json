@@ -12,9 +12,9 @@
             "logDriver": "awslogs",
             "options": {
                 "awslogs-create-group": "true",
-                "awslogs-group": "streaming",
+                "awslogs-group": "snake-eater",
                 "awslogs-region": "us-west-2",
-                "awslogs-stream-prefix": "streaming"
+                "awslogs-stream-prefix": "snake-eater"
             }
         }
       }
