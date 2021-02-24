@@ -73,10 +73,6 @@ client.on('voiceStateUpdate', (oldMemberState, newMemberState) => {
 
 async function playSong() {
 
-  if (playingSong ) {
-    return;
-  }
-
   playingSong = true;
 
   console.log("playing song");
