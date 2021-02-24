@@ -1,0 +1,28 @@
+{
+    "family": "snake-eater",
+    "networkMode": "awsvpc",
+    "taskRoleArn": "arn:aws:iam::623157150824:role/ecsTaskExecutionRole",
+    "executionRoleArn": "arn:aws:iam::623157150824:role/ecsTaskExecutionRole",
+    "containerDefinitions": [
+      {
+        "name": "pipeline",
+        "image": "623157150824.dkr.ecr.us-west-2.amazonaws.com/snake-eater",
+        "essential": true,
+        "logConfiguration": {
+            "logDriver": "awslogs",
+            "options": {
+                "awslogs-create-group": "true",
+                "awslogs-group": "streaming",
+                "awslogs-region": "us-west-2",
+                "awslogs-stream-prefix": "streaming"
+            }
+        }
+      }
+    ],
+    "requiresCompatibilities": [
+      "FARGATE"
+    ],
+    "cpu": "256",
+    "memory": "512"
+  }
+  
