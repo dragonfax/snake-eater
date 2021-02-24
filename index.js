@@ -58,7 +58,6 @@ client.on('voiceStateUpdate', (oldMemberState, newMemberState) => {
   if ( newMemberState.channelID == channel_id && oldMemberState.channelID != channel_id ) {
     // this user just joined the channel
     listenersCount++;
-    console.log("user joined");
   }
 
   if ( newMemberState.channelID != channel_id && oldMemberState.channelID == channel_id ) {
@@ -67,13 +66,11 @@ client.on('voiceStateUpdate', (oldMemberState, newMemberState) => {
     if (listenersCount < 0 ) {
       listenersCount = 0;
     }
-    console.log("user left");
   }
 
   if ( listenersCount > 0 && ! playingSong ) {
     playSong();
   } else if ( listenersCount == 0 && playingSong && dispatcher ) {
-    console.log("no users listening, stopping playback")
     dispatcher.pause();
     dispatcher.destroy();
     playingSong = false;
@@ -85,13 +82,9 @@ async function playSong() {
 
   playingSong = true;
 
-  console.log("playing song");
-
-
   // when to start the playback at?
   var seconds = moment().diff(now, 'seconds');
   var skip = seconds % songLengthSeconds;
-  console.log(`skiping to ${skip}`);
 
   dispatcher = connection
     .play(filename, { seek: skip })
@@ -100,7 +93,6 @@ async function playSong() {
         playSong();
       } else {
         playingSong = false;
-        console.log("done playing");
       }
     })
     .on("error", error => { 
